@@ -9,7 +9,7 @@
 void menu()
 {
 	char out[100];
-	strcpy(out,"Welcome to Untitled");
+	strcpy(out,"Welcome to The 90's");
 	printf("\n");
 	printf("\n");
 	printf("\n");
