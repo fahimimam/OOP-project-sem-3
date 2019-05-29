@@ -1,0 +1,116 @@
+#include <stdlib.h>
+#include"graphics.h"
+#include<string>
+#include<iostream>
+#include<string>
+#include<algorithm>
+#include"dotdot.h"
+#include"cricx.h"
+void menu()
+{
+	char out[100];
+	strcpy(out,"Welcome to The 90's");
+	printf("\n");
+	printf("\n");
+	printf("\n");
+	int l = strlen(out);
+	int pos = (int)((105 - l) / 2);
+	for (int i = 0; i < pos / 2; i++)
+		printf("\t");
+	for (int i = 0; i < strlen(out); i++)
+	{
+		printf("%c", out[i]);
+		delay(70);
+	}
+	printf("\n");
+	strcpy(out, "Press 1 For cricx");
+	for (int i = 0; i < pos / 2; i++)
+		printf("\t");
+	printf("%s", out);
+	printf("\n");
+	strcpy(out, "Press 2 For DotDot");
+	for (int i = 0; i < pos / 2; i++)
+		printf("\t");
+	printf("%s", out);
+	printf("\n");
+	strcpy(out, "Enter your choice to continue:");
+	for (int i = 0; i < pos; i++)
+		printf("    ");
+	printf("%s", out);
+}
+int main()
+{
+	HWND console = GetConsoleWindow();
+	RECT r;
+	GetWindowRect(console, &r);
+	MoveWindow(console, r.left, r.top, 850, 500, TRUE);
+	menu();
+	int choice;
+	scanf("%d", &choice);
+	//choice = getch();
+	if (choice == 1)
+	{
+		system("cls");
+		cricx object;
+		object.input();
+		initwindow(screenWidth, screenHeight, "", 5, 5);
+		object.toss();
+		object.scoreboard();
+		object.gamecricx();
+		delay(3000);
+		cleardevice();
+		object.resultboard();
+		closegraph();
+	}
+	else if (choice == 2)
+	{
+		system("cls");
+		dotdot object;
+		object.input();
+		object.putpoints();
+		initwindow(screenWidth, screenHeight, "", 5, 5);
+		gameboard();
+		object.firstline();
+		int c = object.getcount();
+		while (c--)
+		{
+			while (true)
+			{
+				delay(200);
+				if (GetAsyncKeyState(VK_DOWN))
+				{
+					object.downkey();
+				}
+				else if (GetAsyncKeyState(VK_UP))
+				{
+					object.upkey();
+				}
+				else if (GetAsyncKeyState(VK_LEFT))
+				{
+					object.leftkey();
+				}
+				else if (GetAsyncKeyState(VK_RIGHT))
+				{
+					object.rightkey();
+				}
+				if (GetAsyncKeyState(VK_RETURN))
+				{
+					if (object.returnkey())
+						break;
+				}
+			}
+			object.playernameshow();
+		}
+		object.endgame();
+		getch();
+		delay(2000);
+		cleardevice();
+		object.showresults();
+		delay(5000);
+		fflush(stdin);
+		getch();
+		closegraph();
+	}
+	getchar();
+	return 0;
+}
